@@ -283,7 +283,7 @@ good_centres = raw.peak_centre;
 
 %remove peak centre times
 for i = 1:length(good_centres)
-    good_events(:,1+4*(i-1)) = 86400.* (good_events(:,1+4*(i-1))- good_centres(i));
+    good_events(:,1+4*(i-1)) = (87755.244).* (good_events(:,1+4*(i-1))- good_centres(i));
 end
 figure
 hold on
@@ -345,7 +345,7 @@ for i = 1:length(good_centres)
     mag_signal(:,i) = [mag_bckgnd(:,4*i)];
     mag_times(:,i) = [mag_bckgnd(:,4*i - 3)];
     mag_signal(:,i) = mag_signal(:,i) - median(mag_signal(:,i));
-    mag_times(:,i) = 86400 .* (mag_times(:,i) - median(mag_times(:,i)));
+    mag_times(:,i) = (86400) .* (mag_times(:,i) - median(mag_times(:,i)));
 end
 
 mag_signal = table2array(mag_signal);
