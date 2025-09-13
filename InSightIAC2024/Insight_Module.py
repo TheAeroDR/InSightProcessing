@@ -771,7 +771,7 @@ def pass_distance(i):
     theta_obs = key_data.loc[i,'theta_obs']
     delta_P_obs = np.abs(key_data.loc[i,'delta_P_obs'])
     delta_P_obs = np.abs(key_data.loc[i,'p_lsr_delta_P'])
-    tau_obs = key_data.loc[i,'time_FWHM'] * (87775.2440/86400)  # convert LTST seconds to actual seconds
+    tau_obs = key_data.loc[i,'time_FWHM']
     V = key_data.loc[i,'backg_V']
     E = 2.7e8
     nu = 0.22
