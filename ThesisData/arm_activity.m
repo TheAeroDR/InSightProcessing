@@ -25,7 +25,22 @@ xlabel('Sol')
 %turn off y ticks and y tick labels
 yticklabels([])
 yticks([])
-%custom function to convert array of UTC times to array of decimal Sol
+
+%%
+mag = readtable("ifg_cal_SOL0253_2Hz_v06.tab",'FileType','text');
+
+mag.TLST = mag.TLST/24 + 253;
+
+plot(mag.TLST,mag.B_down)
+hold on
+
+for i = 1:length(sol)
+    if floor(sol(i,1)) == 253
+        patch([sol(i,1),sol(i,1),sol(i,2), sol(i,2)],[-950,-900,-900,-950],'k','FaceAlpha',0.5)
+    end
+end
+
+%% custom function to convert array of UTC times to array of decimal Sol
 %times for InSight
 function d = decimalise(ltst)
 
