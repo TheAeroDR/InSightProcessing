@@ -136,7 +136,7 @@ hold on
 plot([decimal_sol(pressure_peaks(ii)) decimal_sol(pressure_peaks(ii))],[-1,1],'k--')
 plot([decimal_sol(p_walls(ii,1)) decimal_sol(p_walls(ii,1)) NaN decimal_sol(p_walls(ii,2)) decimal_sol(p_walls(ii,2))],[-1,1,NaN,-1,1],'m:')
 xlabel('Decimal Sol [-]')
-ylabel('$\Delta{})$ [Pa]')
+ylabel('$\Delta{}P$ [Pa]')
 
 %%
 t_FWHM = decimal_sol(p_walls(:,2)) - decimal_sol(p_walls(:,1));
@@ -178,7 +178,7 @@ display(mean((detrended_pressure(p_windows(ii,1):p_windows(ii,2))-free_D_lsq_lor
 legend([l1,l2,l3,l4],'$\Delta{}P$ Trace','Pressure Trace Lorentzian','Fixed FWHM LS Lorentzian','Flexible FWHM LS Lorentzian')
 
 xlabel('Decimal Sol [-]')
-ylabel('$\Delta{})$ [Pa]')
+ylabel('$\Delta{}P$ [Pa]')
 
 
 %% TEMPERATURE
@@ -661,9 +661,9 @@ plot([params_fit(2) params_fit(2)],[0,1.4e-8],'k--');
 xlabel('Decimal Sol [-]')
 ylabel('$\theta_{obs}$ [rad]')
 %% MAGNETIC
-ifg_20 = readtable('/media/david/Extreme SSD/ifg_data_calibrated/ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
-ifg_2 = readtable('/media/david/Extreme SSD/ifg_data_calibrated/ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
-ifg_p2 = readtable('/media/david/Extreme SSD/ifg_data_calibrated/ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
+ifg_20 = readtable('ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
+ifg_2 = readtable('ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
+ifg_p2 = readtable('ifg_cal_SOL0239_20Hz_v06.tab','FileType','text');
 
 %%
 file_sol = 239;

@@ -73,22 +73,22 @@ zulu_time_real = zulu_time(keep_check);
 clear keep_check
 
 %%%
-spigadataset = readtable('spiga_dataset.txt');
+%spigadataset = readtable('spiga_dataset.txt');
 
-figure
-histogram(hours(seconds(zulu_time_real*86400)),6:0.5:18,'Normalization','pdf')
-hold on
+%figure
+%histogram(hours(seconds(zulu_time_real*86400)),6:0.5:18,'Normalization','pdf')
+%hold on
 
-histogram(spigadataset.x_LTST_,8:0.5:17,'Normalization','pdf')
-
-
-legend('Dataset','Spiga Dataset')
-xlabel('LTST')
-ylabel('Probability Density')
+%histogram(spigadataset.x_LTST_,8:0.5:17,'Normalization','pdf')
 
 
-[h,p] = kstest2(spigadataset.x_LTST_, hours(seconds(zulu_time_real*86400)));
-display(h);display(p);
+%legend('Dataset','Spiga Dataset')
+%xlabel('LTST')
+%ylabel('Probability Density')
+
+
+%[h,p] = kstest2(spigadataset.x_LTST_, hours(seconds(zulu_time_real*86400)));
+%display(h);display(p);
 
 
 %%
@@ -268,25 +268,6 @@ mag_bckgnd_med = (1.58 * iqr(pol.*bckgnd_align,2)) ./ sqrt(height(bckgnd_align))
 
 patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(mag_bckgnd_med)')],[.7 .7 .7],'facealpha',0.3,'edgecolor',[.7 .7 .7]);
 
-%%
-a = max(event_align.*pol);
-
-figure
-tiledlayout(2,2)
-nexttile(1)
-plot(raw_event.p_lsr_delta_P,a,'.')
-xlabel('$P_{obs}$ [Pa]')
-ylabel('$B_Z$ [nT]')
-nexttile(2)
-plot(raw_event.miss_distance,a,'.')
-xlabel('$b$ [m]')
-nexttile(3)
-plot(raw_event.time_FWHM,a,'.')
-xlabel('$\tau_{obs}$ [Pa]')
-ylabel('$B_Z$ [nT]')
-nexttile(4)
-plot(raw_event.backg_V,a,'.')
-xlabel('$V_{BGR}$ [ms\textsuperscript{-1}]')
 %% Bn
 %linear detrend and resample to same times
 interp_range = linspace(-400,400,1000)';
@@ -446,6 +427,54 @@ end
 mag_bckgnd_med = (1.58 * iqr(pol.*bckgnd_align,2)) ./ sqrt(height(bckgnd_align));
 
 patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(mag_bckgnd_med)')],[.7 .7 .7],'facealpha',0.3,'edgecolor',[.7 .7 .7]);
+
+%%
+a = max(event_align.*pol);
+
+figure
+tiledlayout(2,2)
+nexttile(1)
+plot(raw_event.p_lsr_delta_P,a,'.')
+xlabel('$P_{obs}$ [Pa]')
+ylabel('$B_Z$ [nT]')
+hold on
+
+[x_sorted, sortIdx] = sort(raw_event.p_lsr_delta_P);
+y_sorted = a(sortIdx);
+smoothed_y = smooth(x_sorted, y_sorted, 0.01, 'loess');
+plot(x_sorted, smoothed_y)
+
+
+nexttile(2)
+plot(raw_event.miss_distance,a,'.')
+xlabel('$b$ [m]')
+hold on
+
+[x_sorted, sortIdx] = sort(raw_event.miss_distance);
+y_sorted = a(sortIdx);
+smoothed_y = smooth(x_sorted, y_sorted, 0.01, 'loess');
+plot(x_sorted, smoothed_y)
+
+nexttile(3)
+plot(raw_event.time_FWHM,a,'.')
+xlabel('$\tau_{obs}$ [Pa]')
+ylabel('$B_Z$ [nT]')
+hold on
+
+[x_sorted, sortIdx] = sort(raw_event.time_FWHM);
+y_sorted = a(sortIdx);
+smoothed_y = smooth(x_sorted, y_sorted, 0.01, 'loess');
+plot(x_sorted, smoothed_y)
+
+nexttile(4)
+plot(raw_event.backg_V,a,'.')
+xlabel('$V_{BGR}$ [ms\textsuperscript{-1}]')
+hold on
+
+[x_sorted, sortIdx] = sort(raw_event.backg_V);
+y_sorted = a(sortIdx);
+smoothed_y = smooth(x_sorted, y_sorted, 0.01, 'loess');
+plot(x_sorted, smoothed_y)
 
 %%
 %nexttile(2)

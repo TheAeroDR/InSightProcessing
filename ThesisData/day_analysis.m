@@ -196,7 +196,7 @@ T_M_Quad_fig(eng_data.LTST(eng_data{:,53}~=9.9999e3), eng_data{:,53}(eng_data{:,
 %%
 figure
 yyaxis right
-plot(magz.TLST,magz.B_down, 'DisplayName', 'Magentic Field')
+plot(magz.TLST,magz.B_down, 'DisplayName', 'Magnetic Field')
 hold on
 yyaxis left
 % j = 43;
@@ -246,7 +246,7 @@ lengths(1,2) = -939;
 %%
 figure
 yyaxis right
-plot(magz_330.TLST,magz_330.B_down, 'DisplayName', 'Magentic Field')
+plot(magz_330.TLST,magz_330.B_down, 'DisplayName', 'Magnetic Field')
 hold on
 yyaxis left
 % j = 43;
@@ -393,7 +393,6 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     plot(X2,Y2,'DisplayName','Magnetic Field','Parent',axes1,'LineWidth',1.5,'Color',[0.85 0.325 0.098]);
     ylim(axes1,[-942 -899.6]);
     set(axes1,'YColor',[0.85 0.325 0.098],'YTickLabel',{'','',''});
-    title({'-Y Solar Panel Temperature 1'},'LineWidth',1.5,'FontSize',30);
     xlim(axes1,[239 240]);
     grid(axes1,'on');
     hold(axes1,'off');
@@ -407,7 +406,7 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     colororder([0.85 0.325 0.098]);
     yyaxis(axes2,'left');
     
-    plot(X1,Y4,'DisplayName','T-0004','Parent',axes2,'LineWidth',1.5,'Color',[0 0.447 0.741]);
+    plot(X1,Y4,'DisplayName','T-0018','Parent',axes2,'LineWidth',1.5,'Color',[0 0.447 0.741]);
     ylim(axes2,[-105 1]);
     set(axes2,'YColor',[0 0.447 0.741],'YTickLabel',{'','',''});  
     yyaxis(axes2,'right');
@@ -415,7 +414,6 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     ylabel({'Magnetic Field [nT]'},'LineWidth',1.5,'FontSize',30);
     ylim(axes2,[-942 -899.6]);
     set(axes2,'YColor',[0.85 0.325 0.098]);
-    title({'-Y Solar Panel Temperature 2'},'LineWidth',1.5,'FontSize',30);
     xlim(axes2,[239 240]);
     grid(axes2,'on');
     hold(axes2,'off');
@@ -429,7 +427,7 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     colororder([0 0.447 0.741]);
     yyaxis(axes3,'left');
 
-    plot(X1,Y3,'DisplayName','T-0019','Parent',axes3,'LineWidth',1.5,'Color',[0 0.447 0.741]);
+    plot(X1,Y3,'DisplayName','T-0004','Parent',axes3,'LineWidth',1.5,'Color',[0 0.447 0.741]);
     ylim(axes3,[-105 1]);
     ylabel({'Temperature [deg C]'},'LineWidth',1.5,'FontSize',30);
     set(axes3,'YColor',[0 0.447 0.741]);
@@ -437,7 +435,6 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     plot(X2,Y2,'DisplayName','Magnetic Field','Parent',axes3,'LineWidth',1.5,'Color',[0.85 0.325 0.098]);
     ylim(axes3,[-942 -899.6]);
     set(axes3,'YColor',[0.85 0.325 0.098],'YTickLabel',{'','',''});
-    title({'+Y Solar Panel Temperature 2'},'LineWidth',1.5,'FontSize',30);
     xlim(axes3,[239 240]);
     grid(axes3,'on');
     hold(axes3,'off');
@@ -451,7 +448,7 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     colororder([0 0.447 0.741]);
     
     yyaxis(axes4,'left');
-    plot(X1,Y5,'DisplayName','T-0018','Parent',axes4,'LineWidth',1.5,'Color',[0 0.447 0.741]);
+    plot(X1,Y5,'DisplayName','T-0019','Parent',axes4,'LineWidth',1.5,'Color',[0 0.447 0.741]);
     ylim(axes4,[-105 1]);
     set(axes4,'YColor',[0 0.447 0.741],'YTickLabel',{'','',''});
     yyaxis(axes4,'right');
@@ -459,7 +456,6 @@ function T_M_Quad_fig(X1, Y1, X2, Y2, Y3, Y4, Y5)
     ylabel({'Magnetic Field [nT]'},'LineWidth',1.5,'FontSize',30);
     ylim(axes4,[-942 -899.6]);
     set(axes4,'YColor',[0.85 0.325 0.098]);
-    title({'+Y Solar Panel Temperature 1'},'LineWidth',1.5,'FontSize',30);
     xlim(axes4,[239 240]);
     grid(axes4,'on');
     hold(axes4,'off');
