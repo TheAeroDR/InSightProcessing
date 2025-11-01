@@ -268,6 +268,11 @@ mag_bckgnd_med = (1.58 * iqr(pol.*bckgnd_align,2)) ./ sqrt(height(bckgnd_align))
 
 patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(mag_bckgnd_med)')],[.7 .7 .7],'facealpha',0.3,'edgecolor',[.7 .7 .7]);
 
+
+back_x = mag_bckgnd_event{:,4:4:end};
+histogram(back_x)
+kstest(back_x)
+
 %% Bn
 %linear detrend and resample to same times
 interp_range = linspace(-400,400,1000)';
@@ -348,6 +353,11 @@ mag_bckgnd_med = (1.58 * iqr(pol.*bckgnd_align,2)) ./ sqrt(height(bckgnd_align))
 
 patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(mag_bckgnd_med)')],[.7 .7 .7],'facealpha',0.3,'edgecolor',[.7 .7 .7]);
 
+
+back_x = mag_bckgnd_event{:,2:4:end};
+histogram(back_x)
+kstest(back_x)
+
 %% Be
 %linear detrend and resample to same times
 interp_range = linspace(-400,400,1000)';
@@ -427,6 +437,10 @@ end
 mag_bckgnd_med = (1.58 * iqr(pol.*bckgnd_align,2)) ./ sqrt(height(bckgnd_align));
 
 patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(mag_bckgnd_med)')],[.7 .7 .7],'facealpha',0.3,'edgecolor',[.7 .7 .7]);
+
+back_x = mag_bckgnd_event{:,3:4:end};
+histogram(back_x)
+kstest(back_x)
 
 %%
 a = max(event_align.*pol);
