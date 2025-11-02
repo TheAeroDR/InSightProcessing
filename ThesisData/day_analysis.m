@@ -120,28 +120,34 @@ noise_win(1) = idx1;
 [~,idx2] = min(abs(magz.TLST - noise_times(2)));
 noise_win(2) = idx2;
 
-noisy_mag{1} = [magz.B_down(noise_win(1):noise_win(2)), magz.B_north(noise_win(1):noise_win(2)), magz.B_east(noise_win(1):noise_win(2))];
+noisy_mag{1,1} = [magz.B_down(noise_win(1):noise_win(2)), magz.B_north(noise_win(1):noise_win(2)), magz.B_east(noise_win(1):noise_win(2))];
+
+noisy_mag{2,1} = resample(noisy_mag{1,1},1,10);
+noisy_mag{3,1} = resample(noisy_mag{1,1},1,100);
 
 [~,idx1] = min(abs(ifg_2.TLST - noise_times(1)));
 noise_win(1) = idx1;
 [~,idx2] = min(abs(ifg_2.TLST - noise_times(2)));
 noise_win(2) = idx2;
 
-noisy_mag{2} = [ifg_2.B_down(noise_win(1):noise_win(2)), ifg_2.B_north(noise_win(1):noise_win(2)), ifg_2.B_east(noise_win(1):noise_win(2))];
+noisy_mag{1,2} = [ifg_2.B_down(noise_win(1):noise_win(2)), ifg_2.B_north(noise_win(1):noise_win(2)), ifg_2.B_east(noise_win(1):noise_win(2))];
+
+noisy_mag{2,2} = resample(noisy_mag{1,2},1,10);
 
 [~,idx1] = min(abs(ifg_p2.TLST - noise_times(1)));
 noise_win(1) = idx1;
 [~,idx2] = min(abs(ifg_p2.TLST - noise_times(2)));
 noise_win(2) = idx2;
 
-noisy_mag{3} = [ifg_p2.B_down(noise_win(1):noise_win(2)), ifg_p2.B_north(noise_win(1):noise_win(2)), ifg_p2.B_east(noise_win(1):noise_win(2))];
+noisy_mag{1,3} = [ifg_p2.B_down(noise_win(1):noise_win(2)), ifg_p2.B_north(noise_win(1):noise_win(2)), ifg_p2.B_east(noise_win(1):noise_win(2))];
 
 sf = [20,2,0.2];
-lim = [-1.3,-2.4,-3.4;0.2,-0.2,-1.2;1,0,-1]';
+lim = [-1.3,-2.4,-3.4,-2.3,-3.4,-3.35;0.2,-0.2,-1.2,-0.2,-1.04,-1.04;1,0,-1,0,-1,-1]';
+titles={'20Hz','2Hz','0.2Hz','20Hz to 2Hz','2 to 0.2Hz','20Hz to 0.2Hz'};
 figure
 tiledlayout(3,1)
 for i = 1:3
-    [p,f] = pspectrum(noisy_mag{i},sf(i),"power");
+    [p,f] = pspectrum(noisy_mag{1,i},sf(i),"power");
     nexttile(i)
     plot(log10(f),log10(p))
     hold on
@@ -167,6 +173,7 @@ for i = 1:3
     fitresult.p1
 
     xlim([-5,1])
+    title(titles{i})
     if i ==1 || i ==2
         set(gca, 'XTickLabel', [])
     end
@@ -177,6 +184,79 @@ for i = 1:3
         ylabel('$\log_{10}(\textrm{Power})$ [nT\textsuperscript{2}/Hz]')
     end
 end
+
+figure
+tiledlayout(2,1)
+for i = 1:2
+    [p,f] = pspectrum(noisy_mag{2,i},sf(i+1),"power");
+    nexttile(i)
+    plot(log10(f),log10(p))
+    hold on
+    
+    [xData, yData] = prepareCurveData(log10(f),log10(p(:,1)));
+    
+    ft = fittype( 'poly1' );
+    opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+    opts.Display = 'Off';
+    opts.StartPoint = [-1 0];
+    
+    % Fit model to data.
+    [fitresult,gof] = fit(xData(xData>lim(i+3,1)&xData<lim(i+3,2)), yData(xData>lim(i+3,1)&xData<lim(i+3,2)), ft);
+    fitted_D = linspace(lim(i+3,1),lim(i+3,2), 100);
+    fitted_delta_P = feval(fitresult, fitted_D);
+    plot(fitted_D, fitted_delta_P,'k',LineWidth=2);
+    fitresult.p1
+
+    [fitresult,gof] = fit(xData(xData>lim(i+3,2)&xData<lim(i+3,3)), yData(xData>lim(i+3,2)&xData<lim(i+3,3)), ft);
+    fitted_D = linspace(lim(i+3,2),lim(i+3,3), 100);
+    fitted_delta_P = feval(fitresult, fitted_D);
+    plot(fitted_D, fitted_delta_P,'k',LineWidth=2);
+    fitresult.p1
+
+    xlim([-5,1])
+    title(titles{i+3})
+    if i ==1
+        set(gca, 'XTickLabel', [])
+    end
+    if i ==3
+        xlabel('$\log_{10}(\textrm{Frequency})$ [Hz]')
+    end
+    if i ==2
+        ylabel('$\log_{10}(\textrm{Power})$ [nT\textsuperscript{2}/Hz]')
+    end
+end
+
+figure
+[p,f] = pspectrum(noisy_mag{3,1},sf(3),"power");
+nexttile(i)
+plot(log10(f),log10(p))
+hold on
+
+[xData, yData] = prepareCurveData(log10(f),log10(p(:,1)));
+
+ft = fittype( 'poly1' );
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.StartPoint = [-1 0];
+
+% Fit model to data.
+[fitresult,gof] = fit(xData(xData>lim(6,1)&xData<lim(6,2)), yData(xData>lim(6,1)&xData<lim(6,2)), ft);
+fitted_D = linspace(lim(6,1),lim(6,2), 100);
+fitted_delta_P = feval(fitresult, fitted_D);
+plot(fitted_D, fitted_delta_P,'k',LineWidth=2);
+fitresult.p1
+
+[fitresult,gof] = fit(xData(xData>lim(6,2)&xData<lim(6,3)), yData(xData>lim(6,2)&xData<lim(6,3)), ft);
+fitted_D = linspace(lim(6,2),lim(6,3), 100);
+fitted_delta_P = feval(fitresult, fitted_D);
+plot(fitted_D, fitted_delta_P,'k',LineWidth=2);
+fitresult.p1
+
+xlim([-5,1])
+title(titles{6})
+xlabel('$\log_{10}(\textrm{Frequency})$ [Hz]')
+ylabel('$\log_{10}(\textrm{Power})$ [nT\textsuperscript{2}/Hz]')
+
 %%
 eng_data = readtable("ancil_SOL0239_v01.tab",'FileType','text');
 
