@@ -142,7 +142,7 @@ noise_win(2) = idx2;
 noisy_mag{1,3} = [ifg_p2.B_down(noise_win(1):noise_win(2)), ifg_p2.B_north(noise_win(1):noise_win(2)), ifg_p2.B_east(noise_win(1):noise_win(2))];
 
 sf = [20,2,0.2];
-lim = [-1.3,-2.4,-3.4,-2.3,-3.4,-3.35;0.2,-0.2,-1.2,-0.2,-1.04,-1.04;1,0,-1,0,-1,-1]';
+lim = [-1.3,-2.4,-3.4,-2.3,-3.4,-3.35;0.2,-0.2,-1.1,-0.2,-1.04,-1.04;1,0,-1,0,-1,-1]';
 titles={'20Hz','2Hz','0.2Hz','20Hz to 2Hz','2 to 0.2Hz','20Hz to 0.2Hz'};
 figure
 tiledlayout(3,1)

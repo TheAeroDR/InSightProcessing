@@ -355,8 +355,10 @@ patch([interp_range' fliplr(interp_range')],[abs(mag_bckgnd_med)' -fliplr(abs(ma
 
 
 back_x = mag_bckgnd_event{:,2:4:end};
+back_x = back_x(:);
+back_x = (back_x-nanmean(back_x))/nanstd(back_x);
 histogram(back_x)
-kstest(back_x)
+[h,p] = kstest(back_x)
 
 %% Be
 %linear detrend and resample to same times
